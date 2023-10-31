@@ -2,20 +2,9 @@ import streamlit as st
 import openai
 from authenticate import return_api_key
 from langchain.tools import YouTubeSearchTool
-# exercise 11
-from langchain.llms import OpenAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 from kb_module import display_vectorstores
 from users_module import vectorstore_selection_interface
-# exercis 12
-from langchain.memory import ConversationBufferWindowMemory
-
-# exercise 13
-
-import lancedb
 import os
-import tempfile
 
 from gradio_tools.tools import (
 	StableDiffusionTool,
@@ -24,8 +13,6 @@ from gradio_tools.tools import (
 	TextToVideoTool,
 )
 
-
-# exercise 16
 from langchain.agents import ConversationalChatAgent, AgentExecutor
 from langchain.callbacks import StreamlitCallbackHandler
 from langchain.chat_models import ChatOpenAI
@@ -34,10 +21,6 @@ from langchain.memory.chat_message_histories import StreamlitChatMessageHistory
 from langchain.tools import DuckDuckGoSearchRun
 from langchain.tools import WikipediaQueryRun
 from langchain.utilities import WikipediaAPIWrapper
-from langchain.agents import load_tools
-from langchain.utilities.dalle_image_generator import DallEAPIWrapper
-
-
 from langchain.agents import tool
 import json
 

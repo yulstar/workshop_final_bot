@@ -75,18 +75,23 @@ def pandas_ai(user_id, sch_id, profile):
 
 	else:
 		st.session_state.df = download_data(user_id, sch_id, profile)
-	chart_path = os.path.join("exports/charts")
+	chart_dir = os.path.join("exports/charts")
 	with st.form("Question"):
+		
 		question = st.text_input("Question", value="", type="default")
 		submitted = st.form_submit_button("Submit")
 		if submitted:
+			# Check if the file exists and remove it
+			chart_path = os.path.join("exports/charts", "temp_chart.png")
+			if os.path.exists(chart_path):
+				os.remove(chart_path)
 			with st.spinner():
 				llm =OpenAI(api_token=st.session_state.api_key)
 				df = SmartDataframe(
 					st.session_state.df,
 					config={
 						"llm": llm,
-						"save_charts_path": chart_path,
+						"save_charts_path": chart_dir,
 						"save_charts": True,
 						"verbose": True,
 					},
@@ -98,10 +103,6 @@ def pandas_ai(user_id, sch_id, profile):
 				# Display the textual response (if any):
 				if response:
 					st.write(response)
-				chart_path = os.path.join("exports/charts", "temp_chart.png")
-				# Check if the file exists and remove it
-				if os.path.exists(chart_path):
-					os.remove(chart_path)
 				if os.path.exists(chart_path):
 					st.image(
 						chart_path, caption="Generated Chart", use_column_width=True
